@@ -37,7 +37,64 @@ class  ButtonAppBar extends Component{
   state = {
     openMenu: false,
     openPlaces: false,
+    placesList: [],
+    placesToVisit: [],
   };
+
+  componentDidMount() {
+    this.loadPlacesList();
+  }
+
+  loadPlacesList(){
+    this.setState({placesList: [{
+      id: 1,
+      title: 'El Escarpin',
+      description: 'Very nice Restaurant',
+      url: 'http://wwww.elescarpin.com',
+    },
+    {
+      id: 2,
+      title: 'La Osa y la Madrona',
+      description: 'Famous Monument',
+      url: 'http://wwww.laosaqueosa.com',
+    }]})
+  }
+
+  addPlacesToVisit(newPlace){
+    if (!this.state.placesToVisit.includes(newPlace)){
+      this.setState(prevState => ({
+        placesToVisit: [...prevState.placesToVisit, newPlace]
+      }))
+    }
+  }
+
+  renderPlacesList(place){
+    const {id, title} = place;
+    return(
+    <ListItem button key={id} onClick={() => this.addPlacesToVisit(place)} >
+      <ListItemIcon>
+        <RoomIcon/>
+      </ListItemIcon>
+      <ListItemText primary={title} /> 
+    </ListItem>)
+  }
+
+  removePlacesToVisit(placeToRemove){
+    this.setState(prevState => ({
+      placesToVisit: prevState.placesToVisit.filter(function(e) { return e !== placeToRemove })
+    }))
+  }
+
+  renderPlacesToVisit(place){
+    const {id, title} = place;
+    return(
+    <ListItem button key={id} onClick={() => this.removePlacesToVisit(place)} >
+      <ListItemIcon>
+        <RoomIcon/>
+      </ListItemIcon>
+      <ListItemText primary={title} /> 
+    </ListItem>)
+  }
 
   handleMenuDrawerOpen = () => {
     this.setState({ openMenu: true });
@@ -55,11 +112,10 @@ class  ButtonAppBar extends Component{
     this.setState({ openPlaces: false });
   }
 
-  
   render(){
 
     const { classes } = this.props;
-    const {openMenu, openPlaces} = this.state;
+    const {openMenu, openPlaces, placesList, placesToVisit} = this.state;
 
       return (
         <div className={classes.root}>
@@ -132,30 +188,30 @@ class  ButtonAppBar extends Component{
                   <ListItem>
                   <ListItemText primary={'List of places'} />
                   </ListItem>
-                  <ListItem button key={'El Escarpin'}>
-                    <ListItemIcon>
-                      <RoomIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary={'El Escarpin'} />      
-                  </ListItem>
-                  <ListItem button key={'La Osa y la Madrona'}>
-                    <ListItemIcon>
-                      <RoomIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary={'La Osa y la Madrona'} />      
-                  </ListItem>
+                  { openPlaces ?
+                    placesList.map(place => this.renderPlacesList(place)) : 
+                    <ListItem button key={'no places'}>
+                      <ListItemIcon>
+                        <RoomIcon/>
+                      </ListItemIcon>
+                      <ListItemText primary={'No Places to Show'} />      
+                    </ListItem>                
+                  }
                 </List>
               <Divider />
               <List>
                   <ListItem>
                   <ListItemText primary={'Places to Visit'} />
                   </ListItem>
-                  <ListItem button key={'El Escarpin'}>
-                    <ListItemIcon>
-                      <RoomIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary={'El Escarpin'} />      
-                  </ListItem>
+                    { openPlaces ?
+                      placesToVisit.map(place => this.renderPlacesToVisit(place)) : 
+                      <ListItem button key={'no places'}>
+                        <ListItemIcon>
+                          <RoomIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary={'No Places to Show'} />      
+                      </ListItem>                
+                    }
                 </List>
             </Drawer>
         </div>
