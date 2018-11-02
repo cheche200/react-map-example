@@ -14,6 +14,7 @@ import {AppBar,
   ListItemText} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon  from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon  from '@material-ui/icons/ChevronRight';
 import MapIcon from '@material-ui/icons/Map';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
@@ -33,22 +34,31 @@ const styles = {
 
 class  ButtonAppBar extends Component{
   state = {
-    open: false,
+    openMenu: false,
+    openPlaces: false,
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
+  handleMenuDrawerOpen = () => {
+    this.setState({ openMenu: true });
   };
 
-  handleDrawerClose = () => {
-    this.setState({ open: false });
+  handlePlacesDrawerOpen = () => {
+    this.setState({ openPlaces: true });
   };
+
+  handleMenuDrawerClose = () => {
+    this.setState({ openMenu: false });
+  };
+
+  handlePlacesDrawerClose = () => {
+    this.setState({ openPlaces: false });
+  }
 
   
   render(){
 
     const { classes } = this.props;
-    const {open} = this.state;
+    const {openMenu, openPlaces} = this.state;
 
       return (
         <div className={classes.root}>
@@ -58,27 +68,62 @@ class  ButtonAppBar extends Component{
               className={classes.menuButton} 
               color="inherit" 
               aria-label="Menu"
-              onClick={this.handleDrawerOpen}>
+              onClick={this.handleMenuDrawerOpen}>
                 <MenuIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.grow}>
-                News
+                Local
               </Typography>
-              <Button color="inherit">Login</Button>
+              <Button  color="inherit" 
+              onClick={this.handlePlacesDrawerOpen}>
+                Places
+              </Button>
             </Toolbar>
           </AppBar>
           <Drawer
               className={classes.drawer}
               variant="persistent"
               anchor="left"
-              open={open}
+              open={openMenu}
               classes={{
                 paper: classes.drawerPaper,
               }}
             >
               <div className={classes.drawerHeader}>
-                <IconButton onClick={this.handleDrawerClose}>
+                <IconButton onClick={this.handleMenuDrawerClose}>
                    <ChevronLeftIcon />
+                </IconButton>
+              </div>
+              <Divider />
+                <List>
+                  <ListItem button key={'Map'}>
+                    <ListItemIcon>
+                      <MapIcon /> 
+                    </ListItemIcon>
+                  <ListItemText primary={'Map'} />
+                  </ListItem>
+                  <ListItem button key={'To Visit'}>
+                    <ListItemIcon>
+                      <CheckBoxIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary={'To Visit'} />
+                  </ListItem>
+                </List>
+              <Divider />
+            </Drawer>
+
+            <Drawer
+              className={classes.drawer}
+              variant="persistent"
+              anchor="right"
+              open={openPlaces}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              <div className={classes.drawerHeader}>
+                <IconButton onClick={this.handlePlacesDrawerClose}>
+                   <ChevronRightIcon />
                 </IconButton>
               </div>
               <Divider />
