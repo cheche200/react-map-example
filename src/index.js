@@ -4,8 +4,9 @@ import './index.css';
 import routes from './routes';
 import { Router, browserHistory } from 'react-router';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'unstated';
 
-ReactDOM.render(<Router history={browserHistory} routes = {routes} />, 
+ReactDOM.render(<Provider><Router history={browserHistory} routes = {routes} /> </Provider>, 
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

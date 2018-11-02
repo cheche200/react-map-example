@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import Api from '../api';
+import PlacesContainer from './PlacesContainer';
+import PropTypes from 'prop-types';
+import subscribe from '../helpers/subscribe';
 
 class MapContainer extends Component{
   state = {
     zoom: 13,
-    data: [],
   }
 
   componentDidMount() {
@@ -13,14 +14,8 @@ class MapContainer extends Component{
   }
 
   loadMarkers(){
-    const api = new Api();
-
-    api.get(`marker?userId=Jose`)
-      .then((response) => {
-        this.setState({
-          data: response.data.data,
-        });
-      });
+    const { places } = this.props;
+    places.loadPlaces();
   }
 
   renderMarkers({ title, description, latitude, longitude }){
@@ -35,7 +30,7 @@ class MapContainer extends Component{
 
   render() {
     const kilometroCero = [40.416632, -3.703794]
-    const { data, } = this.state;
+    const { data, } = this.props.places.state;
 
     return (
       <Map center={kilometroCero} zoom={this.state.zoom}>
@@ -50,4 +45,8 @@ class MapContainer extends Component{
   }
 }
 
-export default MapContainer;
+MapContainer.propTypes = {
+  places: PropTypes.instanceOf(PlacesContainer).isRequired,
+};
+
+export default subscribe(MapContainer, { places: PlacesContainer });
