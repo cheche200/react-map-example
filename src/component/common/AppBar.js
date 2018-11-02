@@ -14,8 +14,8 @@ import {AppBar,
   ListItemText} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon  from '@material-ui/icons/ChevronLeft';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import MapIcon from '@material-ui/icons/Map';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 const styles = {
   root: {
@@ -82,14 +82,20 @@ class  ButtonAppBar extends Component{
                 </IconButton>
               </div>
               <Divider />
-              <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                  <ListItem button key={text}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
+                <List>
+                  <ListItem button key={'Map'}>
+                    <ListItemIcon>
+                      <MapIcon /> 
+                    </ListItemIcon>
+                  <ListItemText primary={'Map'} />
                   </ListItem>
-                ))}
-              </List>
+                  <ListItem button key={'To Visit'}>
+                    <ListItemIcon>
+                      <CheckBoxIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary={'To Visit'} />
+                  </ListItem>
+                </List>
               <Divider />
             </Drawer>
         </div>
