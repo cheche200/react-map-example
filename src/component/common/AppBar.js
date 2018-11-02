@@ -17,6 +17,7 @@ import ChevronLeftIcon  from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon  from '@material-ui/icons/ChevronRight';
 import MapIcon from '@material-ui/icons/Map';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import RoomIcon from '@material-ui/icons/Room';
 
 const styles = {
   root: {
@@ -128,20 +129,34 @@ class  ButtonAppBar extends Component{
               </div>
               <Divider />
                 <List>
-                  <ListItem button key={'Map'}>
-                    <ListItemIcon>
-                      <MapIcon /> 
-                    </ListItemIcon>
-                  <ListItemText primary={'Map'} />
+                  <ListItem>
+                  <ListItemText primary={'List of places'} />
                   </ListItem>
-                  <ListItem button key={'To Visit'}>
+                  <ListItem button key={'El Escarpin'}>
                     <ListItemIcon>
-                      <CheckBoxIcon/>
+                      <RoomIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={'To Visit'} />
+                    <ListItemText primary={'El Escarpin'} />      
+                  </ListItem>
+                  <ListItem button key={'La Osa y la Madrona'}>
+                    <ListItemIcon>
+                      <RoomIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary={'La Osa y la Madrona'} />      
                   </ListItem>
                 </List>
               <Divider />
+              <List>
+                  <ListItem>
+                  <ListItemText primary={'Places to Visit'} />
+                  </ListItem>
+                  <ListItem button key={'El Escarpin'}>
+                    <ListItemIcon>
+                      <RoomIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary={'El Escarpin'} />      
+                  </ListItem>
+                </List>
             </Drawer>
         </div>
       );
